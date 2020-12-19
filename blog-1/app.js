@@ -1,6 +1,5 @@
 const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
-const { reset } = require('nodemon')
 
 const serverHandle = (req, res) => {
   res.setHeader('content-type', 'application/json')
@@ -10,6 +9,9 @@ const serverHandle = (req, res) => {
   //   env: process.env.NODE_ENV,
   // }
   // res.end(JSON.stringify(resData))
+  // 处理 path
+  const url = req.url
+  req.path = url.split('?')[0]
 
   const blogData = handleBlogRouter(req, res)
   if (blogData) {
