@@ -8,10 +8,11 @@ con.connect() // 开始链接
 
 // 统一执行 sql 函数
 function exec(sql) {
+  console.log('sql', sql)
   return new Promise((resolve, reject) => {
     con.query(sql, (err, result) => {
       if (err) {
-        reject(error)
+        reject(err)
         return
       }
       resolve(result)

@@ -8,25 +8,34 @@ const {
 const { SuccessModel, ErrorModel } = require('../model/resModel')
 
 const handleBlogRouter = (req, res) => {
-  
   const method = req.method
   const path = req.path
   const id = req.query.id
 
+  console.log('get path', method, path)
+
   if (method === 'GET' && path === '/api/blog/list') {
     const { author = '', keyword = '' } = req.query
-    const listData = getList(author, keyword)
-    return new SuccessModel(listData)
+    const result = getList(author, keyword)
+    return result.then((listData) => {
+      return new SuccessModel(listData)
+    })
   }
 
   if (method === 'GET' && path === '/api/blog/detail') {
-    const data = getDetail(id)
-    return new SuccessModel(data)
+    const result = getDetail(id)
+    return result.then((data) => {
+      return new SuccessModel(data)
+    })
   }
   if (method === 'POST' && path === '/api/blog/new') {
-    const blogData = req.body
-    const data = newBlog(req.body)
-    return new SuccessModel(data)
+    const au = 'zhangsan'
+    req.body.author = au
+
+    const result = newBlog(req.body)
+    return result.then((data) => {
+      return new SuccessModel(data)
+    })
   }
   if (method === 'POST' && path === '/api/blog/update') {
     const result = updateBlog(id, req.body)
