@@ -38,6 +38,7 @@ const serverHandle = (req, res) => {
 
   // 解析参数
   req.query = querystring.parse(url.split('?')[1])
+
   getPostData(req).then((postData) => {
     req.body = postData
     // console.log('req.body...', req.body)
@@ -46,6 +47,7 @@ const serverHandle = (req, res) => {
       res.end(JSON.stringify(blogData))
       return
     }
+    
     const userData = handleUserRouter(req, res)
     if (userData) {
       res.end(JSON.stringify(userData))

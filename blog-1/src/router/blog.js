@@ -8,9 +8,11 @@ const {
 const { SuccessModel, ErrorModel } = require('../model/resModel')
 
 const handleBlogRouter = (req, res) => {
+  
   const method = req.method
   const path = req.path
   const id = req.query.id
+
   if (method === 'GET' && path === '/api/blog/list') {
     const { author = '', keyword = '' } = req.query
     const listData = getList(author, keyword)
