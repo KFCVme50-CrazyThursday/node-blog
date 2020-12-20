@@ -1,4 +1,4 @@
-# mysql 常用语句
+## mysql 常用语句
 
 ```JavaScript
 use myblog;
@@ -31,4 +31,36 @@ select version();
 insert into blogs (title,content,createtime,author) values('标题D','内容D',1608455192493,'zhangsan');
 
 
+```
+
+## mysql 链接
+
+```javascript
+const mysql = require('mysql')
+
+// 创建连接对象
+const con = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'sj123456',
+  port: 3306,
+  database: 'myblog',
+})
+
+// 开始连接
+con.connect()
+
+// 执行sql查询
+const sql = 'select * from blogs where author="zhangsan"'
+const update = 'update users set realname="李四" where username="lisi"'
+con.query(sql, (err, result) => {
+  if (err) {
+    console.error(err)
+    return
+  }
+  console.log('result:', result)
+})
+
+// 关闭连接
+con.end()
 ```
