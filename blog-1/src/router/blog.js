@@ -39,19 +39,25 @@ const handleBlogRouter = (req, res) => {
   }
   if (method === 'POST' && path === '/api/blog/update') {
     const result = updateBlog(id, req.body)
-    if (result) {
-      return new SuccessModel()
-    } else {
-      return new ErrorModel('update blog failed')
-    }
+    return result.then((val) => {
+      if (val) {
+        return new SuccessModel()
+      } else {
+        return new ErrorModel('update blog failed')
+      }
+    })
   }
   if (method === 'POST' && path === '/api/blog/del') {
-    const result = delBlog(id)
-    if (result) {
-      return new SuccessModel()
-    } else {
-      return new ErrorModel('del blog failed')
-    }
+    const au = 'zhangsan'
+    req.body.author = au
+    const result = delBlog(id, au)
+    return result.then((result) => {
+      if (result) {
+        return new SuccessModel()
+      } else {
+        return new ErrorModel('del blog failed')
+      }
+    })
   }
 }
 

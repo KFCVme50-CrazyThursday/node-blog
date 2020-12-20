@@ -27,7 +27,6 @@ const newBlog = (blogData = {}) => {
     values ('${title}','${content}','${author}','${createtime}')
   `
   return exec(sql).then((insert) => {
-    console.log('insert data is', insert)
     return {
       id: insert.insertId,
     }
@@ -35,14 +34,21 @@ const newBlog = (blogData = {}) => {
 }
 
 const updateBlog = (id, blogData = {}) => {
-  // id: blog id blogData: blog content
-  console.log('====== updateBlog =====', id, blogData)
-  return true
+  const { title, content } = blogData
+  const sql = `
+    update blogs set title='${title}', content='${content}' where id=${id}
+  `
+  return exec(sql).then((update) => {
+    if (update.affectedRows > 0) {
+      return true
+    }
+    return false
+  })
 }
 
-const delBlog = (id) => {
+const delBlog = (id, author) => {
   console.log('=== delete blog ===', `this blog's id is ${id}`)
-  const sql = `delete from blogs where id=${id}`
+  const sql = `delete from blogs where id=${id} and author='${author}'` // 不使用软删除
 
   return exec(sql).then((del) => {
     if (del.affectedRows > 0) {
