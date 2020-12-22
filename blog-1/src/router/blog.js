@@ -12,8 +12,6 @@ const handleBlogRouter = (req, res) => {
   const path = req.path
   const id = req.query.id
 
-  console.log('get path', method, path)
-
   if (method === 'GET' && path === '/api/blog/list') {
     const { author = '', keyword = '' } = req.query
     const result = getList(author, keyword)

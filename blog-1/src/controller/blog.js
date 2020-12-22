@@ -47,7 +47,6 @@ const updateBlog = (id, blogData = {}) => {
 }
 
 const delBlog = (id, author) => {
-  console.log('=== delete blog ===', `this blog's id is ${id}`)
   const sql = `delete from blogs where id=${id} and author='${author}'` // 不使用软删除
 
   return exec(sql).then((del) => {
