@@ -1,3 +1,13 @@
+# readme
+
+## 操作过程
+
+1. 安装 mysql ，建表
+2. 安装 Redis 并启动
+3. 启动 node 服务， `cd blog-1` `npm run dev`
+4. 启动测试文件 `http-server -p 8001`
+5. 浏览器打开 `localhost:8080`
+
 ## mysql 常用语句
 
 ```JavaScript
@@ -95,58 +105,20 @@ redisClient.get('myname',(err,val)=>{
 
 ```nginx
 server {
-      listen       8080;
-      server_name  localhost;
-
-      #charset koi8-r;
-
-      #access_log  logs/host.access.log  main;
-
-      # location / {
-      #     root   html;
-      #     index  index.html index.htm;
-      # }
-
-      location / {
-          proxy_pass http://localhost:8001;
-      }
-      location /api/ {
-          proxy_pass http://localhost:8000;
-          proxy_set_header Host $host;
-      }
-
-      #error_page  404              /404.html;
-
-      # redirect server error pages to the static page /50x.html
-      #
-      error_page   500 502 503 504  /50x.html;
-      location = /50x.html {
-          root   html;
-      }
-
-      # proxy the PHP scripts to Apache listening on 127.0.0.1:80
-      #
-      #location ~ \.php$ {
-      #    proxy_pass   http://127.0.0.1;
-      #}
-
-      # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-      #
-      #location ~ \.php$ {
-      #    root           html;
-      #    fastcgi_pass   127.0.0.1:9000;
-      #    fastcgi_index  index.php;
-      #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
-      #    include        fastcgi_params;
-      #}
-
-      # deny access to .htaccess files, if Apache's document root
-      # concurs with nginx's one
-      #
-      #location ~ /\.ht {
-      #    deny  all;
-      #}
+  listen       8080; // nginx 代理地址
+  server_name  localhost;
+  location / {
+      proxy_pass http://localhost:8001;  // 本地服务地址
   }
+  location /api/ {
+      proxy_pass http://localhost:8000;  // node 服务地址
+      proxy_set_header Host $host;
+  }
+  error_page   500 502 503 504  /50x.html;
+  location = /50x.html {
+      root   html;
+  }
+}
 ```
 
 常用命令
@@ -154,3 +126,9 @@ server {
 - 测试配置文件格式是否正确 `nginx -t`
 - 启动： `nginx` 重启 `nginx -s reload`
 - 停止 `nginx -s stop`
+
+## 测试文件
+
+- 新增各个接口页面测试文件
+- 全局安装 http-server `npm i http-server -g`
+- 启动本地服务 `http-server -p 8001`
