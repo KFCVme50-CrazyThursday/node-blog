@@ -64,3 +64,25 @@ con.query(sql, (err, result) => {
 // 关闭连接
 con.end()
 ```
+
+```javascript
+// redis 链接
+const redis = require('redis)
+
+// 创建客户端
+const redisClient = redis.createClient(6379,'127.0.0.1')
+redisClient.on('error', err=>{
+  console.error(err)
+})
+
+redisClient.set('myname','sq',redis.print)
+redisClient.get('myname',(err,val)=>{
+  if(err) {
+    console.error(err)
+    return
+  }
+  console.log('val is', val)
+  redisClient.quit()
+})
+
+```
