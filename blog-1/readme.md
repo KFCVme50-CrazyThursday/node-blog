@@ -132,3 +132,16 @@ server {
 - 新增各个接口页面测试文件
 - 全局安装 http-server `npm i http-server -g`
 - 启动本地服务 `http-server -p 8001`
+
+## 日志拆分
+
+- copy.sh 脚本
+  cd 到 utils
+  sh copy.sh
+  日志按天划分 access 复制到 日期划分的日志下 ，清空 access
+  `pwd` 查看当前文件路径
+
+  使用 [crontab](https://www.runoob.com/linux/linux-comm-crontab.html) 定期执行程序日志清空复制
+  crontab -e 添加一个定时任务
+  crontab -l 查看当前有多少定时任务
+  `1 * 0 * * * sh /Users/sy/Desktop/node-blog/blog-1/src/utils/copy.sh`
