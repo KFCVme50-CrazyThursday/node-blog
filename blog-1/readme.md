@@ -145,3 +145,7 @@ server {
   crontab -e 添加一个定时任务
   crontab -l 查看当前有多少定时任务
   `1 * 0 * * * sh /Users/sy/Desktop/node-blog/blog-1/src/utils/copy.sh`
+
+## 日志分析
+
+readline
