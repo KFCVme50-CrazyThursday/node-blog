@@ -129,7 +129,7 @@ server {
 
 ## 测试文件
 
-- 新增各个接口页面测试文件
+- 新增各个接口页面测试文件 html-test
 - 全局安装 http-server `npm i http-server -g`
 - 启动本地服务 `http-server -p 8001`
 
@@ -149,3 +149,9 @@ server {
 ## 日志分析
 
 readline
+
+## sql 注入
+
+## xss 攻击
+
+## crypto 进行 md5 加密
