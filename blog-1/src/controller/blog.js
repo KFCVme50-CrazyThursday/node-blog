@@ -1,4 +1,4 @@
-const { exec } = require('../db/mysql')
+const { exec, escape } = require('../db/mysql')
 
 const getList = (author, keyword) => {
   let sql = `select * from blogs where 1=1 `
@@ -21,10 +21,14 @@ const getDetail = (id) => {
 }
 
 const newBlog = (blogData = {}) => {
-  const { title, content, author, createtime = +new Date() } = blogData
+  let { title, content, author, createtime = +new Date() } = blogData
+  title = escape(title)
+  content = escape(content)
+  author = escape(author)
+  createtime = escape(createtime)
   const sql = `
     insert into blogs (title,content,author,createtime) 
-    values ('${title}','${content}','${author}','${createtime}')
+    values (${title},${content},${author},${createtime})
   `
   return exec(sql).then((insert) => {
     return {
@@ -34,9 +38,11 @@ const newBlog = (blogData = {}) => {
 }
 
 const updateBlog = (id, blogData = {}) => {
-  const { title, content } = blogData
+  let { title, content } = blogData
+  title = escape(title)
+  content = escape(content)
   const sql = `
-    update blogs set title='${title}', content='${content}' where id=${id}
+    update blogs set title=${title}, content=${content} where id=${id}
   `
   return exec(sql).then((update) => {
     if (update.affectedRows > 0) {
@@ -47,6 +53,8 @@ const updateBlog = (id, blogData = {}) => {
 }
 
 const delBlog = (id, author) => {
+  id = escape(id)
+  author = escape(author)
   const sql = `delete from blogs where id=${id} and author='${author}'` // 不使用软删除
 
   return exec(sql).then((del) => {
